@@ -49,5 +49,53 @@ class TestVisitedList(TestCase):
         self.assertContains(response, 'Moab')
         self.assertNotContains(response, 'Tokyo')
         self.assertNotContains(response, 'New York')
-        
 
+
+class TestAddNewPlace(TestCase):
+
+    def test_add_new_unvisited_place_to_wish_list(self):
+
+        response = self.client.post(reverse('place_list'), { 'name': 'Tokyo', 'visited': False }, follow=True)
+
+        #check that correct template was used
+        self.assertTemplateUsed(response, 'travel_wishlist/wishlist.html')
+
+        #what data was used to populate the template?
+        response_places = response.context['places']
+        #should be 1 item
+        self.assertEqual(len(response_places), 1)
+        tokyo_response = response_places[0]
+
+        #expect this data to be in the database. Use get() to get data with 
+        #the values expected.  Will throw an exception if no data, or more than
+        #one row, matches.  Remember throwing an exception will cause this test to fail
+        tokyo_in_database = Place.objects.get(name='Tokyo', visited=False)
+
+        #is the data used to render the template the same as the data in the database
+        self.assertEqual(tokyo_response, tokyo_in_database)
+
+
+class TestVisitPlace(TestCase):
+
+    fixtures = ['test_places']
+
+    def test_visit_place(self):
+
+        #visit place pk=2, New York (change NewYork to visited)
+        response = self.client.post(reverse('place_was_visited', args=(2,) ), follow=True)
+        #check that correct template was used
+        self.assertTemplateUsed(response, 'travel_wishlist/wishlist.html')
+
+        #no New York in the response - so NY is not on the wishlist template anymore
+        self.assertNotContains(response, "New York")
+
+        #is New York visited?
+        new_york = Place.objects.get(pk=2)
+        self.assertTrue(new_york.visited)
+
+
+    def test_visit_no_existent_place(self):
+
+        #visit place w pk =200 does not exist
+        response = self.client.post(reverse('place_was_visited', args=(200,) ), follow=True)
+        self.assertEqual(response.status_code, 404) #not found
