@@ -1,0 +1,11 @@
+*.pyc
+__pycache__
+db.sqlite3
+
+
+env/
+.vscode
+chromedriver
+.DS_store
+wishlist/.DS_store
+wishlist/chromedriver_mac64.zip
