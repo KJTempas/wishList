@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #'' signifies the home page
     path('', include('travel_wishlist.urls'))
 ]
