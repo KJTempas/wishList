@@ -8,5 +8,7 @@ urlpatterns = [
     path('visited', views.places_visited, name='places_visited'),
     #this path uses the primary key (variable name place_pk) to identify which place was visited
     path('place/<int:place_pk>/was_visited/', views.place_was_visited, name='place_was_visited'),
+    path('place/<int:place_pk>', views.place_detail, name='place_details'), #captures any pk
+    path('place/<int:place_pk>/delete', views.delete_place, name='delete_place'),
     path('about', views.about, name='about')
 ]
