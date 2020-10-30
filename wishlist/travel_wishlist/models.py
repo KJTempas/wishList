@@ -20,9 +20,10 @@ class Place(models.Model):
         old_place = Place.objects.filter(pk=self.pk).first()
         if old_place and old_place.photo:
             #if there is a previous Place, and that Place has a photo
+            #it that old places photo is not the same as the photo
             if old_place.photo != self.photo:
                 self.delete_photo(old_place.photo)
-
+        #call to the super class method (Django's save method)
         super().save(*args, **kwargs)
 
     def delete_photo(self, photo):
@@ -31,8 +32,8 @@ class Place(models.Model):
 
     def delete(self, *args, **kwargs):
         if self.photo:
-            self.delete_photo(self.photo)
-        
+            self.delete_photo(self.photo) #calling method above
+        #call through to django super function to do the actual delete
         super().delete(*args, **kwargs)
 
 
