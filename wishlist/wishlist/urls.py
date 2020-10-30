@@ -25,5 +25,6 @@ urlpatterns = [
 from django.conf import settings
 from django.conf.urls.static import static
 
-if settings.DEBUG:
+if settings.DEBUG: #if running locally in dev mode; add on these routes to static files
+    #how to route requerts for static files
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
