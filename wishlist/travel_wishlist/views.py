@@ -45,7 +45,7 @@ def about(request):
 
 @login_required
 def places_visited(request):
-    visited = Place.objects.filter(visited=True)
+    visited = Place.objects.filter(user=request.user).filter(visited=True).order_by('name')
         #render visited.html page with {this data}
     return render(request, 'travel_wishlist/visited.html', { 'visited': visited })
 
@@ -53,6 +53,7 @@ def places_visited(request):
 @login_required
 def place_was_visited(request, place_pk):
     if request.method == 'POST':
+        
                  # pk is column name,  place_pk is variable
         #earlier version before adding 404 was 
         #place = Place.objects.get(pk=place_pk)
@@ -61,7 +62,7 @@ def place_was_visited(request, place_pk):
             place.visited = True
             place.save()
         else:
-            return HttpResponseForbidden
+            return HttpResponseForbidden()
     return redirect('place_list') #place_list is the name of the path in urls.py
 
 @login_required
