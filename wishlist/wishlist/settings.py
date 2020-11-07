@@ -25,7 +25,7 @@ SECRET_KEY = '5(@!rga%_zrd*^9_z_78ce!9nzv)0*+d_prxu+^bcxdllloixi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,11 +77,18 @@ WSGI_APPLICATION = 'wishlist.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'places',
+        'USER': 'traveler',
+        'PASSWORD': os.getenv('TRAVELER_PW'),
+        'HOST': '/cloudsql/wishlist-294814:us-central1:wishlist-db',
+        'PORT': '5432'
     }
 }
-
+#if not running at GAE, then replace the host with your local
+#computer to connect to the database via cloud_sql_proxy
+if not os.getenv('GAE_INSTANCE'):
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
