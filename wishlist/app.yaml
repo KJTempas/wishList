@@ -5,11 +5,11 @@ handlers:
 - url: /static
   static_dir: www/static/
 
-_url: /.*
+- url: /.*
   script: auto
 
 env_variables:
-  TRAVELER_PW: Chopin9lives
+  TRAVELER_PW: Zion9livesAcadia
 
 beta_settings:
   cloud_sql_instances: wishlist-294814:us-central1:wishlist-db

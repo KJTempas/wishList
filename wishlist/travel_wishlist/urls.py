@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, admin_views
 
 urlpatterns = [
     #a path of '' is to the home page; a path of 'visited' takes user to that page
@@ -10,5 +10,6 @@ urlpatterns = [
     path('place/<int:place_pk>/was_visited/', views.place_was_visited, name='place_was_visited'),
     path('place/<int:place_pk>', views.place_detail, name='place_details'), #captures any pk
     path('place/<int:place_pk>/delete', views.delete_place, name='delete_place'),
-    path('about', views.about, name='about')
+    path('about', views.about, name='about'),
+    path('catfact', admin_views.get_cat_fact, name='admin_get_cat_fact')
 ]

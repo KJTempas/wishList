@@ -1,0 +1,4 @@
+cron: #chronological - will happen on schedule
+- description: "get cat facts"
+  url: /catfact
+  schedule: every 5 mins  

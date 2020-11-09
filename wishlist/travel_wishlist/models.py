@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
 # Create your models here.
+class CatFact(models.Model):
+    fact = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.fact
+
+
 class Place(models.Model):
     #these will map to column in a table #cascade means delete all places if user is deleted
     user = models.ForeignKey('auth.User', null=False, on_delete=models.CASCADE)
