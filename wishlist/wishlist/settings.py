@@ -90,14 +90,15 @@ DATABASES = {
 }
 #if not running at GAE, then replace the host with your local
 #computer to connect to the database via cloud_sql_proxy
-if not os.getenv('GAE_INSTANCE'):
+if not os.getenv('GAE_INSTANCE'): #talk to sqlite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
         }
     }
-    
+# if not os.getenv('GAE_INSTANCE'): #talk to self
+#     DATABASES['default']['HOST'] = '127.0.0.1'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
